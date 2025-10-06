@@ -1,16 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Travel</title>
-  <meta name="description" content="Apply for U.S. Department of Education authorized scholarship funding">
-
-
-
-
-  
+  <meta name="description" content="Apply for U.S. Department of Education authorized scholarship funding" />
 
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
@@ -30,7 +24,11 @@
     .trust-badges{display:flex;justify-content:space-around;flex-wrap:wrap;gap:16px;margin:24px 0}
     .trust-badge{display:flex;align-items:center;gap:6px;font-size:13px;color:#555}
     .guarantee{font-size:13px;color:#666;margin-top:24px;padding-top:16px;border-top:1px solid #eee}
-    @media (min-width:480px){.container{max-width:480px;padding:24px}.header{font-size:28px}.cta-button{width:calc(50% - 6px);flex:none;padding:18px 20px;font-size:18px}}
+    @media (min-width:480px){
+      .container{max-width:480px;padding:24px}
+      .header{font-size:28px}
+      .cta-button{width:calc(50% - 6px);flex:none;padding:18px 20px;font-size:18px}
+    }
   </style>
 </head>
 <body>
@@ -38,83 +36,139 @@
     <div class="badge">Official Program</div>
     <h1 class="header">Study in USA for Free Now!</h1>
     <p class="subheader">Pursue your academic dreams in America</p>
+
     <div class="urgency-banner">
       <span>Applications Deadline: <strong id="deadline-date"></strong></span>
     </div>
-    <p class="deadline-text">This annual application window closes in <strong id="countdown-days">1</strong> days at <strong id="deadline-time">23:59:59</strong></p>
+    <p class="deadline-text">
+      This annual application window closes in <strong id="countdown-days">1</strong> days at
+      <strong id="deadline-time">23:59:59</strong>
+    </p>
+
     <div>
       <div class="benefit-item">$10,000 Monthly Stipend + Tuition</div>
       <div class="benefit-item">Health Insurance & Accommodation</div>
     </div>
+
     <p style="text-align:center">Start your application now by selecting your gender:</p>
     <div class="cta-buttons">
       <button class="cta-button male" onclick="applyNow('male')">Male</button>
       <button class="cta-button female" onclick="applyNow('female')">Female</button>
     </div>
+
     <div class="trust-badges">
-      <div class="trust-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="#002366"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5zm-1.06 13.54L7.4 12l1.41-1.41 2.12 2.12 4.24-4.24 1.41 1.41z"/></svg>Verified</div>
-      <div class="trust-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="#002366"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11z"/></svg>Secure</div>
-      <div class="trust-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="#002366"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3zm0 6.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5z"/></svg>Accredited</div>
+      <div class="trust-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#002366" aria-hidden="true">
+          <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5zm-1.06 13.54L7.4 12l1.41-1.41 2.12 2.12 4.24-4.24 1.41 1.41z"/>
+        </svg>
+        Verified
+      </div>
+      <div class="trust-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#002366" aria-hidden="true">
+          <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11z"/>
+        </svg>
+        Secure
+      </div>
+      <div class="trust-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#002366" aria-hidden="true">
+          <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3zm0 6.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5z"/>
+        </svg>
+        Accredited
+      </div>
     </div>
+
     <p class="guarantee">Authorized government program. All applications are processed through secure systems.</p>
   </div>
 
   <script>
+    // ---- Deadline / Countdown ----
     function setDeadline(){
       const now = new Date();
       const deadline = new Date();
-      deadline.setDate(now.getDate()+1);
-      deadline.setHours(23,59,59,0);
-      document.getElementById("deadline-date").textContent = deadline.toLocaleDateString("en-US",{month:"short",day:"numeric"});
-      const daysLeft = Math.ceil((deadline - now)/864e5);
+      deadline.setDate(now.getDate() + 1);
+      deadline.setHours(23, 59, 59, 0);
+
+      document.getElementById("deadline-date").textContent =
+        deadline.toLocaleDateString("en-US", { month:"short", day:"numeric" });
+
+      const daysLeft = Math.ceil((deadline - now) / 864e5);
       document.getElementById("countdown-days").textContent = daysLeft;
+
       updateCountdown(deadline);
-      setInterval(()=> updateCountdown(deadline),1000);
+      setInterval(() => updateCountdown(deadline), 1000);
     }
+
     function updateCountdown(deadline){
       const now = new Date();
       const diff = deadline - now;
-      if(diff <= 0) {
-        document.getElementById("deadline-time").textContent = "CLOSED";
-      } else {
-        const hrs = String(Math.floor(diff/36e5 % 24)).padStart(2,'0');
-        const mins = String(Math.floor(diff/6e4 % 60)).padStart(2,'0');
-        const secs = String(Math.floor(diff/1e3 % 60)).padStart(2,'0');
-        document.getElementById("deadline-time").textContent = `${hrs}:${mins}:${secs}`;
+      const timeEl = document.getElementById("deadline-time");
+
+      if (diff <= 0) {
+        timeEl.textContent = "CLOSED";
+        return;
       }
+      const hrs = String(Math.floor((diff / 36e5) % 24)).padStart(2, "0");
+      const mins = String(Math.floor((diff / 6e4) % 60)).padStart(2, "0");
+      const secs = String(Math.floor((diff / 1e3) % 60)).padStart(2, "0");
+      timeEl.textContent = `${hrs}:${mins}:${secs}`;
     }
+
+    // Initialize on load
     setDeadline();
 
-    // ENTERMASTER CHANGE LINKS -- Separate link lists for each gender
+    // ---- Links Pools ----
     const maleLinks = [
       "https://studyabroad.ethicaloptimist.com/usa-scholarship/",
       "https://studyabroad.ethicaloptimist.com/tag/study-in-usa/",
       "https://studyabroad.ethicaloptimist.com/usa-scholarship/",
-      "https://studyabroad.ethicaloptimist.com/tag/study-in-uk",
+      "https://studyabroad.ethicaloptimist.com/tag/study-in-uk"
       // add more male-specific links here
     ];
+
     const femaleLinks = [
       "https://studyabroad.ethicaloptimist.com/usa-scholarship/",
       "https://studyabroad.ethicaloptimist.com/tag/study-in-usa/",
       "https://studyabroad.ethicaloptimist.com/tag/study-in-usa/",
-      "https://studyabroad.ethicaloptimist.com/uk",
+      "https://studyabroad.ethicaloptimist.com/uk"
       // add more female-specific links here
     ];
 
+    // ---- Robust click handler ----
     function applyNow(gender) {
-      // Choose appropriate list based on gender
-      const pool = gender === 'male' ? maleLinks : femaleLinks;
+      const pool = gender === "male" ? maleLinks : femaleLinks;
+
+      // choose an index different from last used (if possible)
       const lastIndexKey = `lastOpenedIndex_${gender}`;
       const previousIndex = localStorage.getItem(lastIndexKey);
       let index;
       do {
         index = Math.floor(Math.random() * pool.length);
-      } while(pool.length > 1 && index == previousIndex);
-      localStorage.setItem(lastIndexKey, index);
+      } while (pool.length > 1 && String(index) === String(previousIndex));
+
+      localStorage.setItem(lastIndexKey, String(index));
       const selectedURL = pool[index];
-      fbq("track","LinkButtonClick",{linkURL:selectedURL,gender:gender});
-      ttq.track('LinkButtonClick',{linkURL:selectedURL,gender:gender});
-      window.open(selectedURL, '_blank');
+
+      // 1) Open immediately in a new tab (most blockers allow direct user-initiated opens)
+      const win = window.open(selectedURL, "_blank", "noopener");
+
+      // 2) Fire analytics SAFELY (don’t break clicks if not loaded)
+      try {
+        if (typeof fbq === "function") {
+          fbq("track", "LinkButtonClick", { linkURL: selectedURL, gender });
+        }
+      } catch (e) { /* ignore */ }
+
+      try {
+        if (typeof ttq !== "undefined" && ttq && typeof ttq.track === "function") {
+          ttq.track("LinkButtonClick", { linkURL: selectedURL, gender });
+        }
+      } catch (e) { /* ignore */ }
+
+      // 3) Fallback if popup blocked: navigate same tab
+      if (!win || win.closed || typeof win.closed === "undefined") {
+        // A short timeout lets analytics attempt without blocking navigation
+        setTimeout(() => { window.location.href = selectedURL; }, 0);
+      }
     }
   </script>
 </body>
