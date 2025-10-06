@@ -133,7 +133,7 @@
       // add more female-specific links here
     ];
 
-    // ---- Robust click handler ----
+    // ---- Robust click handler (no double-open) ----
     function applyNow(gender) {
       const pool = gender === "male" ? maleLinks : femaleLinks;
 
@@ -148,26 +148,16 @@
       localStorage.setItem(lastIndexKey, String(index));
       const selectedURL = pool[index];
 
-      // 1) Open immediately in a new tab (most blockers allow direct user-initiated opens)
-      const win = window.open(selectedURL, "_blank", "noopener");
+      // Open in a new tab; only fallback if blocked (window.open returns null)
+      const win = window.open(selectedURL, "_blank", "noopener,noreferrer");
 
-      // 2) Fire analytics SAFELY (don’t break clicks if not loaded)
-      try {
-        if (typeof fbq === "function") {
-          fbq("track", "LinkButtonClick", { linkURL: selectedURL, gender });
-        }
-      } catch (e) { /* ignore */ }
+      // Fire analytics safely (won’t interrupt navigation)
+      try { if (typeof fbq === "function") fbq("track", "LinkButtonClick", { linkURL: selectedURL, gender }); } catch(e){}
+      try { if (typeof ttq !== "undefined" && ttq && typeof ttq.track === "function") ttq.track("LinkButtonClick", { linkURL: selectedURL, gender }); } catch(e){}
 
-      try {
-        if (typeof ttq !== "undefined" && ttq && typeof ttq.track === "function") {
-          ttq.track("LinkButtonClick", { linkURL: selectedURL, gender });
-        }
-      } catch (e) { /* ignore */ }
-
-      // 3) Fallback if popup blocked: navigate same tab
-      if (!win || win.closed || typeof win.closed === "undefined") {
-        // A short timeout lets analytics attempt without blocking navigation
-        setTimeout(() => { window.location.href = selectedURL; }, 0);
+      // Fallback only if popup was blocked
+      if (win === null) {
+        window.location.assign(selectedURL);
       }
     }
   </script>
