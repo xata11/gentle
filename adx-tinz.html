@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Travel...QQQ</title>
+  <title>Travel</title>
   <meta name="description" content="Apply for U.S. Department of Education authorized scholarship funding" />
 
   <style>
@@ -122,7 +122,6 @@
       "https://studyabroad.ethicaloptimist.com/tag/study-in-usa/",
       "https://studyabroad.ethicaloptimist.com/usa-scholarship/",
       "https://studyabroad.ethicaloptimist.com/tag/study-in-uk"
-      // add more male-specific links here
     ];
 
     const femaleLinks = [
@@ -130,10 +129,9 @@
       "https://studyabroad.ethicaloptimist.com/tag/study-in-usa/",
       "https://studyabroad.ethicaloptimist.com/tag/study-in-usa/",
       "https://studyabroad.ethicaloptimist.com/uk"
-      // add more female-specific links here
     ];
 
-    // ---- Robust click handler (no double-open) ----
+    // ---- Robust click handler (open only new tab) ----
     function applyNow(gender) {
       const pool = gender === "male" ? maleLinks : femaleLinks;
 
@@ -148,17 +146,12 @@
       localStorage.setItem(lastIndexKey, String(index));
       const selectedURL = pool[index];
 
-      // Open in a new tab; only fallback if blocked (window.open returns null)
-      const win = window.open(selectedURL, "_blank", "noopener,noreferrer");
+      // Open in a new tab (no noreferrer to avoid null window in some browsers)
+      window.open(selectedURL, "_blank", "noopener");
 
-      // Fire analytics safely (won’t interrupt navigation)
+      // Fire analytics safely (won’t interrupt)
       try { if (typeof fbq === "function") fbq("track", "LinkButtonClick", { linkURL: selectedURL, gender }); } catch(e){}
       try { if (typeof ttq !== "undefined" && ttq && typeof ttq.track === "function") ttq.track("LinkButtonClick", { linkURL: selectedURL, gender }); } catch(e){}
-
-      // Fallback only if popup was blocked
-      if (win === null) {
-        window.location.assign(selectedURL);
-      }
     }
   </script>
 </body>
